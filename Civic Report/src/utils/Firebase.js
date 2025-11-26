@@ -3,15 +3,15 @@ import { getFirestore, connectFirestoreEmulator, initializeFirestore, persistent
 import { getAuth, connectAuthEmulator, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
 
-// Firebase configuration
+// Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyC-k_GmIXG9UkOZICBvemN8h7KB54TDm_k",
-  authDomain: "abcd-44084.firebaseapp.com",
-  projectId: "abcd-44084",
-  storageBucket: "abcd-44084.appspot.com",
-  messagingSenderId: "70367132228",
-  appId: "1:70367132228:web:5d0214ba79f13d53b2da11",
-  measurementId: "G-K4FDG52P0Y"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
