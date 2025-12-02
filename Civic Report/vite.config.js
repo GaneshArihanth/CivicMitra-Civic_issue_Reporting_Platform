@@ -20,9 +20,9 @@ const manifestForPlugin = {
     "maskable_icon.png",
   ],
   manifest: {
-    name: "MobilEASE - Mobile Efficient Assistance for Traffic",
-    short_name: "MobilEASE",
-    description: "Application to report traffic issues around you",
+    name: "Civic Mitra - Partner in Civic Reporting",
+    short_name: "Civic Mitra",
+    description: "Application to report civic issues around you",
     icons: [
       { src: "/logo.png", sizes: "512x512", type: "image/png" },
       { src: "/maskable_iconx48.png", sizes: "48x48", type: "image/png", purpose: "maskable" },
@@ -47,7 +47,7 @@ const manifestForPlugin = {
 
 export default defineConfig({
   plugins: [
-    react(), 
+    react(),
     VitePWA({
       ...manifestForPlugin,
       workbox: {

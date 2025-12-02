@@ -1,6 +1,6 @@
-# Blockchain Complaint Registry for MobilEASE
+# Blockchain Complaint Registry for Civic Mitra
 
-This module adds blockchain-based complaint registration to the MobilEASE application, providing an immutable record of complaints and their status.
+This module adds blockchain-based complaint registration to the Civic Mitra application, providing an immutable record of complaints and their status.
 
 ## Features
 

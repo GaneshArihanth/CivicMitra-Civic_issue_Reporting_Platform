@@ -120,11 +120,11 @@ const CloseIcon = () => (
 );
 
 const Brand = ({ onClick }) => (
-  <Link 
-    to="/" 
+  <Link
+    to="/"
     onClick={onClick}
     className="flex items-center gap-2 group transition-all duration-200 hover:opacity-90 active:opacity-80"
-    aria-label="mobilEASE - Home"
+    aria-label="Civic Mitra - Home"
   >
     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center group-hover:shadow-md transition-all">
       <svg
@@ -157,12 +157,12 @@ const NavItem = ({ to, onClick, children, isActive = false, variant = 'default',
       {children}
     </>
   );
-  
+
   if (onClick) {
 
     return (
-      <button 
-        onClick={onClick} 
+      <button
+        onClick={onClick}
         className={`${baseStyles} ${variants[variant]} ${isActive ? '!bg-emerald-50 !text-emerald-700' : ''} ${className}`}
       >
         {content}
@@ -172,8 +172,8 @@ const NavItem = ({ to, onClick, children, isActive = false, variant = 'default',
 
   if (to) {
     return (
-      <Link 
-        to={to} 
+      <Link
+        to={to}
         onClick={onClick}
         className={`${baseStyles} ${variants[variant]} ${isActive ? '!bg-emerald-50 !text-emerald-700' : ''} ${className}`}
       >
@@ -183,8 +183,8 @@ const NavItem = ({ to, onClick, children, isActive = false, variant = 'default',
   }
 
   return (
-    <button 
-      onClick={onClick} 
+    <button
+      onClick={onClick}
       className={`${baseStyles} ${variants[variant]} ${isActive ? '!bg-emerald-50 !text-emerald-700' : ''} ${className}`}
     >
       {content}
@@ -199,44 +199,44 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
     } else {
       document.body.style.overflow = 'auto';
     }
-    
+
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
-  
+
   const menuVariants = {
-    open: { 
+    open: {
       opacity: 1,
       x: 0,
-      transition: { 
+      transition: {
         type: 'spring',
         stiffness: 300,
         damping: 30
       }
     },
-    closed: { 
+    closed: {
       opacity: 0,
       x: '100%',
-      transition: { 
+      transition: {
         type: 'spring',
         stiffness: 300,
         damping: 30
       }
     }
   };
-  
+
   const overlayVariants = {
-    open: { 
+    open: {
       opacity: 1,
       transition: { duration: 0.3 }
     },
-    closed: { 
+    closed: {
       opacity: 0,
       transition: { duration: 0.3, delay: 0.2 }
     }
   };
-  
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -250,7 +250,7 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
             onClick={onClose}
             aria-hidden="true"
           />
-          
+
           <motion.div
             initial="closed"
             animate="open"
@@ -270,31 +270,31 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                 <X className="h-6 w-6" />
               </button>
             </div>
-            
+
             <nav className="flex flex-col space-y-2">
               {user && user.uid ? (
                 <>
                   {/* Show Home and Report Issue only for citizens */}
                   {!official && (
                     <>
-                      <NavItem 
-                        to="/feed" 
+                      <NavItem
+                        to="/feed"
                         onClick={() => onNavigate('/feed')}
                         icon={HomeIcon}
                         isActive={location.pathname === '/feed'}
                       >
                         Home
                       </NavItem>
-                      <NavItem 
-                        to="/citizen-dashboard" 
+                      <NavItem
+                        to="/citizen-dashboard"
                         onClick={() => onNavigate('/citizen-dashboard')}
                         icon={LayoutDashboard}
                         isActive={location.pathname === '/citizen-dashboard'}
                       >
                         Citizen Dashboard
                       </NavItem>
-                      <NavItem 
-                        to="/report" 
+                      <NavItem
+                        to="/report"
                         onClick={() => onNavigate('/report')}
                         icon={AlertCircle}
                         isActive={location.pathname === '/report'}
@@ -304,8 +304,8 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                     </>
                   )}
                   {official ? (
-                    <NavItem 
-                      to="/official-dashboard" 
+                    <NavItem
+                      to="/official-dashboard"
                       onClick={() => onNavigate('/official-dashboard')}
                       icon={LayoutDashboard}
                       isActive={location.pathname === '/official-dashboard'}
@@ -313,8 +313,8 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                       Dashboard
                     </NavItem>
                   ) : (
-                    <NavItem 
-                      to="/track-complaints" 
+                    <NavItem
+                      to="/track-complaints"
                       onClick={() => onNavigate('/track-complaints')}
                       icon={LayoutDashboard}
                       isActive={location.pathname === '/track-complaints'}
@@ -322,8 +322,8 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                       Track
                     </NavItem>
                   )}
-                  <NavItem 
-                    to="/profile" 
+                  <NavItem
+                    to="/profile"
                     onClick={() => {
                       onClose();
                       onNavigate('/profile');
@@ -354,7 +354,7 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                     </>
                   )}
                   <div className="border-t border-gray-200 my-2"></div>
-                  <NavItem 
+                  <NavItem
                     onClick={() => {
                       onClose();
                       handleLogout();
@@ -367,32 +367,32 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout, location, o
                 </>
               ) : (
                 <>
-                  <NavItem 
-                    to="/" 
+                  <NavItem
+                    to="/"
                     onClick={() => onNavigate('/')}
                     isActive={location.pathname === '/'}
                     className="justify-start"
                   >
                     Home
                   </NavItem>
-                  <NavItem 
-                    to="/citizen-login" 
+                  <NavItem
+                    to="/citizen-login"
                     onClick={() => onNavigate('/citizen-login')}
                     variant="outline"
                     isActive={location.pathname === '/citizen-login'}
                   >
                     Citizen Login
                   </NavItem>
-                  <NavItem 
-                    to="/official-login" 
+                  <NavItem
+                    to="/official-login"
                     onClick={() => onNavigate('/official-login')}
                     variant="outline"
                     isActive={location.pathname === '/official-login'}
                   >
                     Official Login
                   </NavItem>
-                  <NavItem 
-                    to="/register" 
+                  <NavItem
+                    to="/register"
                     onClick={() => onNavigate('/register')}
                     variant="primary"
                     isActive={location.pathname === '/register'}
@@ -424,7 +424,7 @@ const Navbar = () => {
   const { currentUser, isOfficial, loading } = useAuth();
   const [userType, setUserType] = useState('citizen');
   const [lang, setLang] = useState('en');
-  
+
   // Set user type based on authentication status and role
   useEffect(() => {
     if (currentUser) {
@@ -440,12 +440,12 @@ const Navbar = () => {
     const current = stored || getCurrentTranslateLang();
     setLang(current);
   }, []);
-  
+
   const handleLanguageChange = (value) => {
     setLang(value);
     setTranslateLang(value);
   };
-  
+
   // Handle window resize for mobile/desktop detection
   useEffect(() => {
     const handleResize = () => {
@@ -455,12 +455,12 @@ const Navbar = () => {
         setIsMenuOpen(false); // Close mobile menu when resizing to desktop
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     handleResize(); // Initial check
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
+
   if (loading) {
     return (
       <div className="h-16 bg-white border-b border-gray-200">
@@ -482,7 +482,7 @@ const Navbar = () => {
       toast.error('Error signing out. Please try again.');
     }
   };
-  
+
   const handleNavigation = (path) => {
     if (path === '/official-dashboard' && !isOfficial) {
       navigate('/unauthorized');
@@ -511,25 +511,25 @@ const Navbar = () => {
               <>
                 {!isOfficial && (
                   <>
-                    <NavItem 
-                      to="/feed" 
-                      icon={HomeIcon} 
+                    <NavItem
+                      to="/feed"
+                      icon={HomeIcon}
                       isActive={location.pathname === '/feed'}
                       onClick={() => handleNavigation('/feed')}
                     >
                       Home
                     </NavItem>
-                    <NavItem 
-                      to="/citizen-dashboard" 
-                      icon={LayoutDashboard} 
+                    <NavItem
+                      to="/citizen-dashboard"
+                      icon={LayoutDashboard}
                       isActive={location.pathname === '/citizen-dashboard'}
                       onClick={() => handleNavigation('/citizen-dashboard')}
                     >
                       Citizen Dashboard
                     </NavItem>
-                    <NavItem 
-                      to="/report" 
-                      icon={AlertCircle} 
+                    <NavItem
+                      to="/report"
+                      icon={AlertCircle}
                       isActive={location.pathname === '/report'}
                       onClick={() => handleNavigation('/report')}
                     >
@@ -538,18 +538,18 @@ const Navbar = () => {
                   </>
                 )}
                 {isOfficial ? (
-                  <NavItem 
-                    to="/official-dashboard" 
-                    icon={LayoutDashboard} 
+                  <NavItem
+                    to="/official-dashboard"
+                    icon={LayoutDashboard}
                     isActive={location.pathname === '/official-dashboard'}
                     onClick={() => handleNavigation('/official-dashboard')}
                   >
                     Dashboard
                   </NavItem>
                 ) : (
-                  <NavItem 
-                    to="/track-complaints" 
-                    icon={LayoutDashboard} 
+                  <NavItem
+                    to="/track-complaints"
+                    icon={LayoutDashboard}
                     isActive={location.pathname === '/track-complaints'}
                     onClick={() => handleNavigation('/track-complaints')}
                   >
@@ -558,16 +558,16 @@ const Navbar = () => {
                 )}
                 {isOfficial && (
                   <>
-                    <NavItem 
-                      to="/official-priority" 
+                    <NavItem
+                      to="/official-priority"
                       icon={BarChart3}
                       isActive={location.pathname === '/official-priority'}
                       onClick={() => handleNavigation('/official-priority')}
                     >
                       Priority
                     </NavItem>
-                    <NavItem 
-                      to="/analytics" 
+                    <NavItem
+                      to="/analytics"
                       icon={BarChart3}
                       isActive={location.pathname === '/analytics'}
                       onClick={() => handleNavigation('/analytics')}
@@ -576,15 +576,15 @@ const Navbar = () => {
                     </NavItem>
                   </>
                 )}
-                <NavItem 
-                  to="/profile" 
-                  icon={UserIcon} 
+                <NavItem
+                  to="/profile"
+                  icon={UserIcon}
                   isActive={location.pathname === '/profile'}
                   onClick={() => handleNavigation('/profile')}
                 >
                   Profile
                 </NavItem>
-                <NavItem 
+                <NavItem
                   onClick={handleLogout}
                   icon={LogOut}
                   className="text-red-600 hover:bg-red-50"
@@ -607,31 +607,31 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <NavItem 
-                  to="/" 
+                <NavItem
+                  to="/"
                   isActive={location.pathname === '/'}
                   onClick={() => handleNavigation('/')}
                 >
                   Home
                 </NavItem>
-                <NavItem 
-                  to="/citizen-login" 
+                <NavItem
+                  to="/citizen-login"
                   variant="outline"
                   isActive={location.pathname === '/citizen-login'}
                   onClick={() => handleNavigation('/citizen-login')}
                 >
                   Citizen Login
                 </NavItem>
-                <NavItem 
-                  to="/official-login" 
+                <NavItem
+                  to="/official-login"
                   variant="outline"
                   isActive={location.pathname === '/official-login'}
                   onClick={() => handleNavigation('/official-login')}
                 >
                   Official Login
                 </NavItem>
-                <NavItem 
-                  to="/register" 
+                <NavItem
+                  to="/register"
                   variant="primary"
                   isActive={location.pathname === '/register'}
                   onClick={() => handleNavigation('/register')}
@@ -657,8 +657,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <MobileMenu 
-        isOpen={isMenuOpen} 
+      <MobileMenu
+        isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         user={currentUser}
         official={isOfficial}

@@ -1,5 +1,5 @@
 specVersion: "v1"
-serviceId: "mobilease"
+serviceId: "civic-mitra"
 location: "us-central1"
 schema:
   source: "./schema"
@@ -7,7 +7,7 @@ schema:
     postgresql:
       database: "fdcdb"
       cloudSql:
-        instanceId: "mobilease-fdc"
+        instanceId: "civic-mitra-fdc"
         # schemaValidation: "STRICT"     # STRICT mode makes Postgres schema match Data Connect exactly.
         # schemaValidation: "COMPATIBLE" # COMPATIBLE mode makes Postgres schema compatible with Data Connect.
 connectorDirs: ["./example"]

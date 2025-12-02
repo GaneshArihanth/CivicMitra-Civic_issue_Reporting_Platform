@@ -24,10 +24,10 @@ const UserIcon = () => (
 );
 
 const Brand = () => (
-  <Link 
-    to="/" 
+  <Link
+    to="/"
     className="flex items-center gap-2 group transition-all duration-200 hover:opacity-90 active:opacity-80"
-    aria-label="mobilEASE - Home"
+    aria-label="Civic Mitra - Home"
   >
     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center group-hover:shadow-md transition-all">
       <svg
@@ -48,7 +48,7 @@ const Brand = () => (
 
 const NavItem = ({ to, onClick, children, isActive = false, variant = 'default', icon: Icon, className = '' }) => {
   const baseStyles = 'inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200';
-  
+
   const variants = {
     default: 'text-neutral-700 hover:bg-neutral-100',
     primary: 'bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 shadow-md hover:shadow-lg',
@@ -56,32 +56,32 @@ const NavItem = ({ to, onClick, children, isActive = false, variant = 'default',
     ghost: 'text-neutral-700 hover:bg-neutral-100',
     active: 'bg-primary-50 text-primary-700 font-semibold',
   };
-  
+
   const variantClass = variants[variant] || variants.default;
   const activeClass = isActive ? variants.active : '';
   const iconClass = children ? 'mr-1' : '';
-  
+
   const content = (
     <>
       {Icon && <Icon className={`w-4 h-4 ${iconClass}`} />}
       {children}
     </>
   );
-  
+
   if (onClick) {
     return (
-      <button 
-        onClick={onClick} 
+      <button
+        onClick={onClick}
         className={`${baseStyles} ${variantClass} ${activeClass} ${className}`}
       >
         {content}
       </button>
     );
   }
-  
+
   return (
-    <Link 
-      to={to} 
+    <Link
+      to={to}
       className={`${baseStyles} ${variantClass} ${activeClass} ${className}`}
     >
       {content}
@@ -91,60 +91,60 @@ const NavItem = ({ to, onClick, children, isActive = false, variant = 'default',
 
 const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
   const location = useLocation();
-  
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
     }
-    
+
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
-  
+
   useEffect(() => {
     onClose();
   }, [location.pathname]);
-  
+
   const menuVariants = {
     hidden: { x: '100%' },
-    visible: { 
+    visible: {
       x: 0,
-      transition: { 
-        type: 'spring', 
-        damping: 30, 
-        stiffness: 300 
-      } 
+      transition: {
+        type: 'spring',
+        damping: 30,
+        stiffness: 300
+      }
     },
-    exit: { 
+    exit: {
       x: '100%',
-      transition: { 
-        type: 'spring', 
-        damping: 30, 
-        stiffness: 300 
-      } 
+      transition: {
+        type: 'spring',
+        damping: 30,
+        stiffness: 300
+      }
     }
   };
-  
+
   const overlayVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: { duration: 0.2 }
     },
-    exit: { 
+    exit: {
       opacity: 0,
       transition: { duration: 0.2 }
     }
   };
-  
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm"
             onClick={onClose}
             initial="hidden"
@@ -153,8 +153,8 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
             variants={overlayVariants}
             aria-hidden="true"
           />
-          
-          <motion.div 
+
+          <motion.div
             className="fixed inset-y-0 right-0 w-full max-w-xs bg-white shadow-2xl flex flex-col"
             initial="hidden"
             animate="visible"
@@ -164,7 +164,7 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
             <div className="p-4 border-b border-neutral-100">
               <div className="flex items-center justify-between">
                 <Brand />
-                <button 
+                <button
                   onClick={onClose}
                   className="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors"
                   aria-label="Close menu"
@@ -173,42 +173,42 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
                 </button>
               </div>
             </div>
-            
+
             <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-              <NavItem 
-                to="/" 
+              <NavItem
+                to="/"
                 isActive={location.pathname === '/'}
                 className="w-full justify-start"
               >
                 Home
               </NavItem>
-              
+
               {user ? (
                 <>
-                  <NavItem 
+                  <NavItem
                     to={official ? "/official-dashboard" : "/citizen-dashboard"}
                     isActive={location.pathname.includes('dashboard')}
                     className="w-full justify-start"
                   >
                     Dashboard
                   </NavItem>
-                  <NavItem 
-                    to="/report" 
+                  <NavItem
+                    to="/report"
                     isActive={location.pathname === '/report'}
                     className="w-full justify-start"
                   >
                     Report Issue
                   </NavItem>
-                  <NavItem 
-                    to="/profile" 
+                  <NavItem
+                    to="/profile"
                     isActive={location.pathname === '/profile'}
                     className="w-full justify-start"
                   >
                     My Profile
                   </NavItem>
                   <div className="pt-2 mt-4 border-t border-neutral-100">
-                    <NavItem 
-                      onClick={handleLogout} 
+                    <NavItem
+                      onClick={handleLogout}
                       variant="outline"
                       className="w-full justify-center"
                     >
@@ -218,15 +218,15 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
                 </>
               ) : (
                 <div className="space-y-2 pt-2">
-                  <NavItem 
-                    to="/login" 
+                  <NavItem
+                    to="/login"
                     variant="primary"
                     className="w-full justify-center"
                   >
                     Sign In
                   </NavItem>
-                  <NavItem 
-                    to="/register" 
+                  <NavItem
+                    to="/register"
                     variant="outline"
                     className="w-full justify-center"
                   >
@@ -235,10 +235,10 @@ const MobileMenu = ({ isOpen, onClose, user, official, handleLogout }) => {
                 </div>
               )}
             </nav>
-            
+
             <div className="p-4 border-t border-neutral-100">
               <p className="text-xs text-neutral-500 text-center">
-                © {new Date().getFullYear()} mobilEASE. All rights reserved.
+                © {new Date().getFullYear()} Civic Mitra. All rights reserved.
               </p>
             </div>
           </motion.div>
@@ -255,7 +255,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -266,7 +266,7 @@ const Navbar = () => {
       console.error('Error signing out:', error);
     }
   };
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -276,11 +276,11 @@ const Navbar = () => {
         setIsScrolled(false);
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -296,20 +296,20 @@ const Navbar = () => {
         setOfficial(false);
       }
     });
-    
+
     return () => unsubscribe();
   }, []);
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   const navbarClasses = [
     'sticky top-0 z-40 transition-all duration-300',
     isScrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-md shadow-sm py-0' : 'bg-white/80 backdrop-blur-sm py-1',
     'border-b border-neutral-100',
   ].join(' ');
-  
+
   return (
     <>
       <header className={navbarClasses}>
@@ -317,24 +317,24 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Brand />
-              
+
               <nav className="hidden md:flex ml-10 space-x-1">
-                <NavItem 
-                  to="/" 
+                <NavItem
+                  to="/"
                   isActive={location.pathname === '/'}
                 >
                   Home
                 </NavItem>
-                
+
                 {user && (
                   <>
-                    <NavItem 
+                    <NavItem
                       to={official ? "/official-dashboard" : "/citizen-dashboard"}
                       isActive={location.pathname.includes('dashboard')}
                     >
                       Dashboard
                     </NavItem>
-                    <NavItem 
+                    <NavItem
                       to="/report"
                       isActive={location.pathname === '/report'}
                     >
@@ -344,20 +344,20 @@ const Navbar = () => {
                 )}
               </nav>
             </div>
-            
+
             <div className="hidden md:flex items-center space-x-2">
               {user ? (
                 <>
-                  <NavItem 
-                    to="/profile" 
+                  <NavItem
+                    to="/profile"
                     variant="ghost"
                     icon={UserIcon}
                     isActive={location.pathname === '/profile'}
                     className="w-10 h-10 justify-center p-0 rounded-full"
                     aria-label="Profile"
                   />
-                  <NavItem 
-                    onClick={handleLogout} 
+                  <NavItem
+                    onClick={handleLogout}
                     variant="outline"
                   >
                     Sign Out
@@ -374,7 +374,7 @@ const Navbar = () => {
                 </>
               )}
             </div>
-            
+
             <div className="flex md:hidden">
               <button
                 onClick={toggleMenu}
@@ -388,9 +388,9 @@ const Navbar = () => {
           </div>
         </div>
       </header>
-      
-      <MobileMenu 
-        isOpen={isMenuOpen} 
+
+      <MobileMenu
+        isOpen={isMenuOpen}
         onClose={toggleMenu}
         user={user}
         official={official}

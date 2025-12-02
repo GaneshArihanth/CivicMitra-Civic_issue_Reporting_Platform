@@ -80,7 +80,7 @@ export async function registerComplaintOnChain({
       audioUrl: audioUrl || '',
       timestamp: new Date().toISOString(),
       reporterUid: reporterUid || '',
-      dapp: 'MobilEASE',
+      dapp: 'Civic Mitra',
       version: 1,
     };
 
@@ -120,10 +120,10 @@ export async function verifyComplaintIntegrity(complaintData) {
   try {
     const { provider } = await connectWallet(false).catch(() => ({}));
     if (!provider) throw new Error('No wallet connected');
-    
+
     const contract = getContract(provider);
     const onChainData = await contract.getComplaint(complaintData.onChain.onChainId);
-    
+
     // Recompute hash from local data
     const computedHash = computeComplaintDataHash({
       id: complaintData.onChain.onChainId,
@@ -135,13 +135,13 @@ export async function verifyComplaintIntegrity(complaintData) {
       audioUrl: complaintData.audioUrl || '',
       timestamp: new Date(complaintData.createdAt).getTime() / 1000,
     });
-    
+
     // Fetch IPFS data
     const ipfsUrl = `https://${complaintData.onChain.ipfsCid}.ipfs.nftstorage.link/`;
     const ipfsRes = await fetch(ipfsUrl);
     if (!ipfsRes.ok) throw new Error('IPFS data not found');
     const ipfsData = await ipfsRes.json();
-    
+
     return {
       isVerified: computedHash === onChainData.dataHash,
       onChainData: {

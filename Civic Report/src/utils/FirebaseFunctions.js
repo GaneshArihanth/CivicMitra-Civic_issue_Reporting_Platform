@@ -66,31 +66,31 @@ const handleRegistration = async (formData) => {
 const isOfficial = async (userId) => {
   try {
     console.log('[isOfficial] Checking if user is official:', { userId });
-    
+
     if (!userId) {
       console.log('[isOfficial] No user ID provided');
       return false;
     }
-    
+
     const userDocRef = doc(db, "users", userId);
     console.log('[isOfficial] Fetching user document...');
-    
+
     const userDocSnapshot = await getDoc(userDocRef);
-    
+
     if (!userDocSnapshot.exists()) {
       console.log('[isOfficial] User document does not exist');
       return false;
     }
-    
+
     const userData = userDocSnapshot.data() || {};
     console.log('[isOfficial] User data:', userData);
-    
+
     // Support both schemas: { type: userTypes.official } and { userType: 'official' }
     const isOfficialUser = userData.type === userTypes.official || userData.userType === 'official';
     console.log('[isOfficial] User is official:', isOfficialUser);
-    
+
     return isOfficialUser;
-    
+
   } catch (error) {
     console.error('[isOfficial] Error checking if user is official:', error);
     return false;
@@ -119,19 +119,19 @@ const uploadToFirebaseStorage = async (file, path = 'audio/') => {
     const storage = getStorage();
     const storageRef = ref(storage, `${path}${Date.now()}_${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-    
+
     return new Promise((resolve, reject) => {
-      uploadTask.on('state_changed', 
+      uploadTask.on('state_changed',
         (snapshot) => {
           // Progress function
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
-        }, 
+        },
         (error) => {
           // Handle unsuccessful uploads
           console.error('Error uploading file:', error);
           reject(error);
-        }, 
+        },
         async () => {
           // Handle successful uploads on complete
           try {
@@ -157,7 +157,7 @@ const uploadToFirebaseStorage = async (file, path = 'audio/') => {
 
 const uploadToCloudinary = async (file, folder, resourceType = 'auto') => {
   const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dr3puskd8';
-  const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'mobilease_unsigned';
+  const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'civic_mitra_unsigned';
   const API_KEY = import.meta.env.VITE_CLOUDINARY_API_KEY || '383239151459235';
 
   if (!CLOUD_NAME || !UPLOAD_PRESET || !API_KEY) {
@@ -201,7 +201,7 @@ const uploadToCloudinary = async (file, folder, resourceType = 'auto') => {
     }
 
     const data = await response.json();
-    console.log('Cloudinary upload successful:', { 
+    console.log('Cloudinary upload successful:', {
       url: data.secure_url,
       type: data.resource_type,
       format: data.format
@@ -216,7 +216,7 @@ const uploadToCloudinary = async (file, folder, resourceType = 'auto') => {
 const createComplaint = async (formData, audioBlob = null) => {
   let audioUrl = '';
   let mediaUrl = '';
-  
+
   try {
     // Upload audio file if provided
     if (audioBlob) {
@@ -229,7 +229,7 @@ const createComplaint = async (formData, audioBlob = null) => {
         // Don't fail the whole complaint if audio upload fails
       }
     }
-    
+
     // Upload media file if exists
     if (formData.media) {
       try {
@@ -249,8 +249,8 @@ const createComplaint = async (formData, audioBlob = null) => {
       try {
         // Convert Blob to File with proper type
         const audioFile = new File(
-          [formData.audio], 
-          `audio_${Date.now()}.wav`, 
+          [formData.audio],
+          `audio_${Date.now()}.wav`,
           { type: 'audio/wav' }
         );
         audioUrl = await uploadToCloudinary(audioFile, 'complaints/audio', 'video');
@@ -272,7 +272,7 @@ const createComplaint = async (formData, audioBlob = null) => {
       likesCount: 0,
       audioUrl: audioUrl || '',
     };
-    
+
     const docRef = await addDoc(collection(db, "complaints"), complaintData);
     console.log('Complaint created with ID:', docRef.id);
     return { id: docRef.id, ...complaintData };
@@ -329,14 +329,14 @@ const fetchComplaints = async () => {
   try {
     const complaintsCollection = collection(db, "complaints");
     const snapshot = await getDocs(complaintsCollection);
-    
+
     const complaints = [];
-    
+
     for (const complaintDoc of snapshot.docs) {
       try {
         const data = complaintDoc.data();
         let timestamp;
-        
+
         // Handle different timestamp formats
         if (data.timestamp?.toDate) {
           // Firestore Timestamp object
@@ -354,7 +354,7 @@ const fetchComplaints = async () => {
           });
           continue;
         }
-        
+
         // Skip if timestamp is invalid
         if (isNaN(timestamp.getTime())) {
           console.warn('Invalid timestamp value in complaint:', {
@@ -364,7 +364,7 @@ const fetchComplaints = async () => {
           });
           continue;
         }
-        
+
         // Get user data if reportedBy exists and is a valid string
         let author = "Unknown user";
         if (typeof data.reportedBy === 'string' && data.reportedBy.trim().length > 0) {
@@ -384,7 +384,7 @@ const fetchComplaints = async () => {
             reportedBy: data.reportedBy,
           });
         }
-        
+
         complaints.push({
           id: complaintDoc.id,
           ...data,
@@ -395,7 +395,7 @@ const fetchComplaints = async () => {
           status: data.status || "pending",
           description: data.description || "No description provided"
         });
-        
+
       } catch (error) {
         console.error('Error processing complaint:', {
           id: complaintDoc.id,
@@ -403,7 +403,7 @@ const fetchComplaints = async () => {
         });
       }
     }
-    
+
     console.log(`Fetched ${complaints.length} valid complaints`);
     return complaints;
   } catch (error) {
@@ -423,7 +423,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
       try {
         const data = complaintDoc.data();
         let timestamp;
-        
+
         // Handle different timestamp formats (same as in fetchComplaints)
         if (data.timestamp?.toDate) {
           timestamp = data.timestamp.toDate();
@@ -438,7 +438,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
           });
           continue;
         }
-        
+
         // Skip if timestamp is invalid
         if (isNaN(timestamp.getTime())) {
           console.warn('Invalid timestamp value in real-time update:', {
@@ -448,7 +448,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
           });
           continue;
         }
-        
+
         // Get user data if reportedBy exists
         let author = "Unknown user";
         if (data.reportedBy) {
@@ -461,7 +461,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
             console.warn('Error fetching user data in real-time update:', userError);
           }
         }
-        
+
         updatedComplaints.push({
           id: complaintDoc.id,
           ...data,
@@ -472,7 +472,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
           status: data.status || "pending",
           description: data.description || "No description provided"
         });
-        
+
       } catch (error) {
         console.error("Error processing real-time complaint update:", {
           id: complaintDoc?.id,
@@ -480,7 +480,7 @@ const subscribeToComplaints = (handleComplaintsUpdate) => {
         });
       }
     }
-    
+
     console.log(`[Real-time] Updated with ${updatedComplaints.length} valid complaints`);
     handleComplaintsUpdate(updatedComplaints);
   });
@@ -490,26 +490,26 @@ const addComment = async (complaintID, comment) => {
   try {
     const user = auth.currentUser;
     if (!user) throw new Error('User not authenticated');
-    
+
     const commentsCollection = collection(
       db,
       "complaints",
       complaintID,
       "comments"
     );
-    
+
     // Handle both string and object comment parameters
-    const newComment = typeof comment === 'string' 
+    const newComment = typeof comment === 'string'
       ? {
-          author: user.uid,
-          comment: comment,
-          timestamp: Date.now(),
-        }
+        author: user.uid,
+        comment: comment,
+        timestamp: Date.now(),
+      }
       : {
-          ...comment,
-          author: user.uid, // Ensure author is always set to current user
-          timestamp: comment.timestamp || Date.now(),
-        };
+        ...comment,
+        author: user.uid, // Ensure author is always set to current user
+        timestamp: comment.timestamp || Date.now(),
+      };
 
     await addDoc(commentsCollection, newComment);
   } catch (error) {
@@ -621,27 +621,27 @@ const likeComplaint = async (complaintId) => {
   if (!user?.uid || !complaintId) {
     throw new Error('User not authenticated or invalid complaint ID');
   }
-  
+
   const batch = writeBatch(db);
   const likeRef = doc(db, "complaints", complaintId, "likes", user.uid);
   const complaintRef = doc(db, "complaints", complaintId);
-  
+
   // Check if already liked (defensive check)
   const likeSnap = await getDoc(likeRef);
   if (likeSnap.exists()) {
     throw new Error('User has already liked this complaint');
   }
-  
+
   // Add like and increment count in a batch
-  batch.set(likeRef, { 
-    uid: user.uid, 
-    timestamp: serverTimestamp() 
+  batch.set(likeRef, {
+    uid: user.uid,
+    timestamp: serverTimestamp()
   });
-  batch.update(complaintRef, { 
+  batch.update(complaintRef, {
     likesCount: increment(1),
     updatedAt: serverTimestamp()
   });
-  
+
   await batch.commit();
 };
 
@@ -650,30 +650,30 @@ const unlikeComplaint = async (complaintId) => {
   if (!user?.uid || !complaintId) {
     throw new Error('User not authenticated or invalid complaint ID');
   }
-  
+
   const batch = writeBatch(db);
   const likeRef = doc(db, "complaints", complaintId, "likes", user.uid);
   const complaintRef = doc(db, "complaints", complaintId);
-  
+
   // Check if not liked (defensive check)
   const likeSnap = await getDoc(likeRef);
   if (!likeSnap.exists()) {
     throw new Error('User has not liked this complaint');
   }
-  
+
   // Remove like and decrement count in a batch
   batch.delete(likeRef);
-  batch.update(complaintRef, { 
+  batch.update(complaintRef, {
     likesCount: increment(-1),
     updatedAt: serverTimestamp()
   });
-  
+
   await batch.commit();
 };
 
 const hasUserLiked = async (complaintId, uid) => {
   if (!uid || !complaintId) return false;
-  
+
   try {
     const likeRef = doc(db, "complaints", complaintId, "likes", uid);
     const likeSnap = await getDoc(likeRef);
@@ -692,10 +692,10 @@ const calculateContributionScore = async (userId) => {
     // This is a simplified version that doesn't query the database
     const baseScore = 75; // Base score for having posts
     const postCount = 10; // Fixed post count
-    
+
     // Cap the score at 100
     const score = Math.min(100, baseScore + (postCount * 2.5));
-    
+
     return Math.max(1, Math.round(score));
   } catch (error) {
     console.error('Error calculating contribution score:', error);

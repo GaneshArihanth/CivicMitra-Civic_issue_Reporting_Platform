@@ -15,7 +15,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const APP_NAME = "mobilEASE";
+const APP_NAME = "Civic Mitra";
 let app;
 let db;
 let auth;
@@ -27,16 +27,16 @@ const initializeFirebase = async () => {
     // Initialize Firebase
     const existingApp = getApps().find(a => a.name === APP_NAME);
     app = existingApp || initializeApp(firebaseConfig, APP_NAME);
-    
+
     console.log('[Firebase] Initializing Firebase services...');
-    
+
     // Initialize services with persistence
     db = initializeFirestore(app, {
       localCache: persistentLocalCache({
         tabManager: persistentMultipleTabManager()
       })
     });
-    
+
     auth = getAuth(app);
     storage = getStorage(app, "gs://abcd-44084.appspot.com");
 
@@ -62,7 +62,7 @@ const initializeFirebase = async () => {
         console.warn('[Firebase] Emulator connection error:', emulatorError);
       }
     }
-    
+
     console.log('[Firebase] Firebase services initialized successfully');
     return { app, db, auth, storage };
   } catch (error) {
@@ -75,12 +75,12 @@ const initializeFirebase = async () => {
 const firebaseInitPromise = initializeFirebase();
 
 // Export initialized services
-export { 
+export {
   firebaseInitPromise,
   app,
   db,
   auth,
-  storage 
+  storage
 };
 
 // Export the initialization function for explicit initialization if needed

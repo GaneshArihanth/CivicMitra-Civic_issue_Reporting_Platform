@@ -1,7 +1,7 @@
 {
-  "name": "mobilease-complaint-registry",
+  "name": "civic-mitra-complaint-registry",
   "version": "1.0.0",
-  "description": "Blockchain-based complaint registry for MobilEASE",
+  "description": "Blockchain-based complaint registry for Civic Mitra",
   "type": "module",
   "main": "index.js",
   "scripts": {
