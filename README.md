@@ -8,7 +8,7 @@
 [![Ethereum](https://img.shields.io/badge/Ethereum-Solidity-3C3C3D)](https://ethereum.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-Supported-orange)](https://firebase.google.com/)
 
----
+--- 
 
 ## 📖 Overview
 
