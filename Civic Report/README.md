@@ -1,4 +1,4 @@
-# 🇮🇳 Civic Mitra: Your Partner in Civic Reporting
+# Civic Mitra: Your Partner in Civic Reporting
 
 ## Project Overview
 
