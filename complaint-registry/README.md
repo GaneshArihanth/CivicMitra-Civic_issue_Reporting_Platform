@@ -2,7 +2,7 @@
 
 This module adds blockchain-based complaint registration to the Civic Mitra application, providing an immutable record of complaints and their status.
 
-## Features
+## Features 
 
 - Register complaints on the blockchain with IPFS media storage
 - Track complaint status (In Progress, Solved, Rejected)
