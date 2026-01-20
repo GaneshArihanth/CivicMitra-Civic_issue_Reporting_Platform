@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Civic Mitra</string>
+    <string name="title_activity_main">Civic Mitra</string>
+    <string name="package_name">com.civicmitra.app</string>
+    <string name="custom_url_scheme">com.civicmitra.app</string>
+</resources>
