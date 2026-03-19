@@ -50,7 +50,7 @@ export async function analyzeMedia({ photos = [], videoSnapshot = null }) {
   // photos: Blob[] (images), videoSnapshot: Blob (image) optional
   const ai = await ensureGenAI();
   const model = ai.getGenerativeModel({ 
-    model: 'gemini-1.5-flash',
+    model: 'gemini-3-flash-preview',
     generationConfig: {
       temperature: 0.2,  // Slightly creative but mostly focused
       topP: 0.95,
