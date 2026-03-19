@@ -59,6 +59,7 @@ export async function analyzeMedia({ photos = [], videoSnapshot = null }) {
     },
   });
 
+  
   const systemPrompt = [
     'You are an AI assistant that analyzes images/videos of civic infrastructure issues.',
     'You will be provided with one or more media items (photos or video snapshots) to analyze.',
